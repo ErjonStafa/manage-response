@@ -13,6 +13,8 @@
             "email": "erjonstafa647@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^8.0",
         "laravel/laravel": "^v9.0.0"
