@@ -1,0 +1,30 @@
+{
+    "name": "erjon/manage-response",
+    "description": "\"Controller Success And Error Response With Toastr\"",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Erjon\\ManageResponse\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "erjonstafa",
+            "email": "erjonstafa647@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "laravel/laravel": "^v9.0.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Erjon\\ManageResponse\\ManageResponseServiceProvider"
+            ],
+            "aliases": {
+                "ManageResponse": "Erjon\\ManageResponse\\Facades\\ManageResponseFacade"
+            }
+        }
+    }
+}

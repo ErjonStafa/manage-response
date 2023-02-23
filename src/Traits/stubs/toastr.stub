@@ -1,0 +1,56 @@
+@push("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        let options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $(document).ready(function (){
+            let success = @json($success??false);
+            let error = @json($error??false);
+
+            if (error) {
+                let errorTitle = @json($errorTitle??null);
+                let errorBody = @json($errorBody??null);
+
+                errorMessage(errorTitle, errorBody)
+            }
+
+            if(success) {
+                let successTitle = @json($successTitle??null);
+                let successBody = @json($successBody??null);
+
+                successMessage(successTitle, successBody)
+            }
+        })
+
+        function errorMessage(title, body) {
+            let correctTitle = title || "Error";
+            let correctBody = body || "There was an error";
+
+            toastr.error(correctBody, correctTitle, options)
+        }
+
+        function successMessage(title, body) {
+            let correctTitle = title || "Error";
+            let correctBody = body || "There was an error";
+
+            toastr.success(correctBody, correctTitle, options)
+        }
+    </script>
+@endpush
