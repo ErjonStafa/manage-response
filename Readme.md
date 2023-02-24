@@ -12,7 +12,7 @@ There is a combination of two parts.
 ### Installation 
 
 ````
-composer install erjon/manage-response
+composer require erjon/manage-response
 ````
 ****
 
