@@ -21,12 +21,12 @@ composer require erjon/manage-response
 ````
 use Erjon\ManageResponse\ManageResponse;
 
-ManageResponse::viewSuccess('name.of.view', 'message title', 'message body');
-ManageResponse::viewError('name.of.view', 'message title', 'message body');
-ManageResponse::backSuccess('name.of.view', 'message title', 'message body');
-ManageResponse::backError('name.of.view', 'message title', 'message body');
-ManageResponse::viewExceptionError('name.of.view', 'message title', 'message body');
-ManageResponse::backExceptionError('name.of.view', 'message title', 'message body');
+return ManageResponse::viewSuccess('name.of.view', 'message title', 'message body');
+return ManageResponse::viewError('name.of.view', 'message title', 'message body');
+return ManageResponse::backSuccess('name.of.view', 'message title', 'message body');
+return ManageResponse::backError('name.of.view', 'message title', 'message body');
+return ManageResponse::viewExceptionError('name.of.view', 'message title', 'message body');
+return ManageResponse::backExceptionError('name.of.view', 'message title', 'message body');
 ````
 
 ***Please note that this work is still in progress and more improvement and methods will probably be on the way***
@@ -46,7 +46,59 @@ php artisan create:layout --path=layouts/app --toastr=layouts/includes/toastr
 ****
 
 
+### Managing validation request errors
+
+**Inside your FormRequest Class override the failedValidation method**
+
+````
+protected function failedValidation(Validator $validator)
+{
+    ManageResponse::createValidationErrorSession($title = 'Given data was invalid!', $validator->failed());
+    parent::failedValidation($validator);
+}
+````
+
+**By default the message displayed is the one below**
+````
+Singular: There was 1 error.
+Plural: There were 5 errors.
+````
+
+You can publish the language files to change this message
+
+````
+php artisan vendor:publish --tag=manage-response
+````
+
+***Found in lang/vendor/manage-response/en/manage-response.php***
+
 ### In case you do not create templates
 
-Use variables for error ````$errorTitle```` and ````$errorBody````
-Use variable for success ````$successBody```` and ````$successTitle````
+Use variables for error ````$error=true```` ````$errorTitle```` , ````$errorBody````
+<br>
+Use variable for success ````$success=false```` ````$successBody```` , ````$successTitle````
+<hr>
+
+For the ````ManageResponse::createValidationErrorSession()```` check the code below to get a reference of how the things work
+
+````
+@php
+    if (Session::has('error')) {
+            //This variable is always true
+            $error = Session::get('error');
+            Session::forget('error');
+    }
+
+    if (Session::has('errorBody')) {
+            $errorBody = Session::get('errorBody');
+            Session::forget('errorBody');
+    }
+
+    if (Session::has('errorTitle')) {
+            $errorTitle = Session::get('errorTitle');
+            Session::forget('errorTitle');
+    }
+@endphp
+````
+
+***Note!*** **This code is in the toastr.blade.php file**
