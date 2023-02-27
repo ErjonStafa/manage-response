@@ -1,4 +1,21 @@
 @push("scripts")
+    @php
+        if (Session::has('error')) {
+                $error = Session::get('error');
+                Session::forget('error');
+        }
+
+        if (Session::has('errorBody')) {
+                $errorBody = Session::get('errorBody');
+                Session::forget('errorBody');
+        }
+
+        if (Session::has('errorTitle')) {
+                $errorTitle = Session::get('errorTitle');
+                Session::forget('errorTitle');
+        }
+    @endphp
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>

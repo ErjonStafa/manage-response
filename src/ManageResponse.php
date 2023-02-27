@@ -53,12 +53,22 @@ class ManageResponse
         ]);
     }
 
-    public function backExceptionError(\Exception $exception): RedirectResponse
+    public static function backExceptionError(\Exception $exception): RedirectResponse
     {
         return back()->with([
             'error' => true,
             'errorBody' => $exception->getMessage(),
             'errors' => method_exists($exception, 'errors') ? $exception->errors() : []
         ]);
+    }
+
+    public static function createValidationErrorSession(string $title, array $failed): void
+    {
+        $errorsCount = count($failed);
+        $body = trans_choice('manage-response::manage_response.errorBody', $errorsCount, ['count' => $errorsCount]);
+
+        \Session::put('error', true);
+        \Session::put('errorTitle', $title);
+        \Session::put('errorBody', $body);
     }
 }
