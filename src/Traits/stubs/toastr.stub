@@ -5,14 +5,38 @@
                 Session::forget('error');
         }
 
-        if (Session::has('errorBody')) {
-                $errorBody = Session::get('errorBody');
-                Session::forget('errorBody');
+        if (Session::has('errorDescription')) {
+                $errorDescription = Session::get('errorDescription');
+                Session::forget('errorDescription');
         }
 
         if (Session::has('errorTitle')) {
                 $errorTitle = Session::get('errorTitle');
                 Session::forget('errorTitle');
+        }
+
+        if ($errors->has('error')) {
+            $error = $errors->get('error');
+        }
+
+        if ($errors->has('errorTitle')) {
+            $errorTitle = $errors->get('errorTitle');
+        }
+
+        if ($errors->has('errorDescription')) {
+            $errorDescription = $errors->get('errorDescription');
+        }
+
+        if ($errors->has('success')) {
+            $success = $errors->get('success');
+        }
+
+        if ($errors->has('successTitle')) {
+            $successTitle = $errors->get('successTitle');
+        }
+
+        if ($errors->has('successDescription')) {
+            $successDescription = $errors->get('successDescription');
         }
     @endphp
 
@@ -43,31 +67,31 @@
 
             if (error) {
                 let errorTitle = @json($errorTitle??null);
-                let errorBody = @json($errorBody??null);
+                let errorDescription = @json($errorDescription??null);
 
-                errorMessage(errorTitle, errorBody)
+                errorMessage(errorTitle, errorDescription)
             }
 
             if(success) {
                 let successTitle = @json($successTitle??null);
-                let successBody = @json($successBody??null);
+                let successDescription = @json($successDescription??null);
 
-                successMessage(successTitle, successBody)
+                successMessage(successTitle, successDescription)
             }
         })
 
-        function errorMessage(title, body) {
+        function errorMessage(title, description) {
             let correctTitle = title || "Error";
-            let correctBody = body || "There was an error";
+            let correctDescription = description || "There was an error";
 
-            toastr.error(correctBody, correctTitle, options)
+            toastr.error(correctDescription, correctTitle, options)
         }
 
-        function successMessage(title, body) {
+        function successMessage(title, description) {
             let correctTitle = title || "Error";
-            let correctBody = body || "There was an error";
+            let correctDescription = description || "There was an error";
 
-            toastr.success(correctBody, correctTitle, options)
+            toastr.success(correctDescription, correctTitle, options)
         }
     </script>
 @endpush

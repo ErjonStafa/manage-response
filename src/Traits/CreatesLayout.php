@@ -18,16 +18,8 @@ trait CreatesLayout
             $path = str_replace('\\', '/', $path);
             $toastrPath = str_replace('\\', '/', $toastrPath);
 
-            $this->warn('Line 20');
-            $this->info($path);
-            $this->info($toastrPath);
-
             $path = base_path("resources/views/{$path}.blade.php");
             $toastrPath = base_path("resources/views/{$toastrPath}.blade.php");
-
-            $this->warn('Line 27');
-            $this->info($path);
-            $this->info($toastrPath);
 
             $this->createDirectory($path, $toastrPath);
 
@@ -39,7 +31,7 @@ trait CreatesLayout
 
                 $this->info("Created the layout");
             } else {
-                $this->info('Layout already exists');
+                $this->warn('Layout already exists');
             }
 
             if ( ! \File::exists($toastrPath))
@@ -48,7 +40,7 @@ trait CreatesLayout
 
                 $this->info("Created the toastr file");
             } else {
-                $this->info('Toastr file already exists');
+                $this->warn('Toastr file already exists');
             }
 
         } catch (\Exception $exception) {
@@ -64,9 +56,6 @@ trait CreatesLayout
         $toastrPath = explode('/', $toastrPath);
         $toastrPath = implode('/', array_diff($toastrPath, array_slice($toastrPath, -1)));
 
-        $this->warn('Line 63');
-        $this->info("Directory: {$path}");
-        $this->info("Toastr Directory {$toastrPath}");
 
         if (! \File::isDirectory($path)) {
             \File::makeDirectory($path, 0777, true);
