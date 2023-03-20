@@ -10,13 +10,16 @@ class ManageResponseServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/lang', 'manage-response');
 
+        $this->mergeConfigFrom(__DIR__.'/config/toastr.php', 'toastr');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateLayout::class,
             ]);
 
             $this->publishes([
-                __DIR__.'/lang' => $this->app->langPath('vendor/manage-response')
+                __DIR__.'/lang' => $this->app->langPath('vendor/manage-response'),
+                __DIR__.'/config/toastr.php' => config_path('toastr.php')
             ], 'manage-response');
         }
     }
